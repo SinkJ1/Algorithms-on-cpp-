@@ -2,6 +2,7 @@
 Переставить строки матрицы по убываю значения суммы элементов строки.
 */
 #include <iostream>
+#include <vector>
 
 int matrix[4][4] = {
 	{ 16, 3, 2, 13 },
@@ -39,21 +40,28 @@ int *rowsSum() {
 	return sum;
 }
 
-void swap(int *a1, int *a2, int M)
+void rowSwap(int firstRowIndex, int secondRowIndex) {
+	std::vector<int> firstRow;
+	std::vector<int> secondRow;
+
+	for (int j = 0; j < 4; j++) {
+		firstRow.push_back(matrix[firstRowIndex][j]);
+		secondRow.push_back(matrix[secondRowIndex][j]);
+	}
+
+	for (int j = 0; j < 4; j++) {
+		matrix[firstRowIndex][j] = secondRow[j];
+		matrix[secondRowIndex][j] = firstRow[j];
+	}
 
 }
 
 void rowSort() {
 
-	int *notSortingArray = rowsSum();
-	int firstRow[4];
-	int secondRow[4];
-
-
 	for (int n = 4 - 1; n > 0; n--) {
 		for (int i = 0; i < 3; i++) {
-			if (notSortingArray[i] < notSortingArray[i + 1]) {
-				
+			if (rowsSum()[i] < rowsSum()[i + 1]) {
+				rowSwap(i, i + 1);
 			} 
 		}
 	}
@@ -61,9 +69,18 @@ void rowSort() {
 
 int main() {
 	matrixDisplay();
+	std::cout << "\n";
+	for (int i = 0; i < 4; i++) {
+		std::cout << rowsSum()[i] << "\t" << std:: endl;
+	}
+
 	rowSort();
 	matrixDisplay();
 
+	std::cout << "\n";
+	for (int i = 0; i < 4; i++) {
+		std::cout << rowsSum()[i] << "\t" << std::endl;
+	}
 	system("pause");
 	return 0;
 }
