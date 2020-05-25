@@ -6,6 +6,7 @@
 */
 
 #include <iostream>
+#include <string>
 
 int sumOfLast(int value, int n) 
 {
@@ -21,10 +22,22 @@ int sumOfLast(int value, int n)
 	return result;
 }
 
+/*
+	Why not just take the base-10 log of the absolute value of the number, 
+	round it down, and add one? This works for positive and negative numbers 
+	that aren't 0, and avoids having to use any string conversion functions.
+*/
 bool IsLucky(int value, int rule)
 {
+	if (value < 10 || -10 > value) return false;
+
+	int nDigits = floor(log10(value)) + 1;
+	if (nDigits % 2 != 0) return false;
+
+	int delimeter = pow(10, nDigits/2);
+
 	int sumFirstPart = sumOfLast(value, rule);
-	int sumSecondPart = sumOfLast(value / 1000, rule);
+	int sumSecondPart = sumOfLast(value / delimeter, rule);
 
 	return (sumFirstPart == sumSecondPart);
 }
@@ -45,9 +58,6 @@ void IsLuckyTestCase(int value, int rule)
 
 int main(void) 
 {
-	int value;
-	value = 666666;
-
 	IsLuckyTestCase(666666, 3);
 	IsLuckyTestCase(123321, 3);
 	IsLuckyTestCase(550055, 3);
