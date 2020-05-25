@@ -55,8 +55,6 @@ std::vector<int> getDoublesNumbers() {
 					b = j + 1;
 				}
 				for (; b < 4; b++) {
-					int m1 = matrix[i][j];
-					int m2 = matrix[a][b];
 					if (matrix[i][j] == matrix[a][b]) {
 						numbers.push_back(matrix[i][j]);
 						break;
